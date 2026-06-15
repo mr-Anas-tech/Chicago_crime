@@ -22,8 +22,12 @@ int_transformation as(
     primary_type as crime_category,
     description as crime_description,
     location_description,
-    case when lower(is_arrest)='true' then 1 else 0 end as is_arrest,
-    case when lower(is_domestic)='true' then 1 else 0 end as is_domestic,
+    case when lower(is_arrest)='true' then 1 
+    when lower(is_arrest)='false' then 0 
+    else  null end as is_arrest,
+    case when lower(is_domestic)='true' then 1
+    when lower(is_domestic)='false' then 0 else null
+    end as is_domestic,
     crime_beat,
     district,
     ward,
