@@ -11,7 +11,7 @@ int_transformation as(
     crime_time,
     extract( hour from crime_time )  as crime_hour,
     extract(day from crime_date) as crime_day,
-    extract(dayofweek from crime_date) as crime_weak_days,
+    extract(dayofweek from crime_date) as crime_week_days,
     extract(month from crime_date) as crime_month,
     crime_year,
     datetime_diff(cast( report_updated_on as datetime),

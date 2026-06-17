@@ -1,0 +1,148 @@
+version: 2
+
+models:
+  - name: fct_chicago_crime
+    description: "Central fact table containing all recorded crime incidents in Chicago with behavioral metrics, geographic keys, and time-intelligence fields."
+    columns:
+      - name: crime_id
+        description: "Primary key for each unique crime incident record."
+        tests:
+          - unique
+          - not_null
+
+      - name: case_number
+        description: "Chicago Police Department unique case number assigned to the incident."
+        tests:
+          - not_null
+
+      - name: crime_date
+        description: "The calendar date when the crime incident occurred."
+        tests:
+          - not_null
+
+      - name: crime_time
+        description: "The exact timestamp/time string when the crime was committed."
+
+      - name: crime_hour
+        description: "Extracted hour (0-23) from the crime time for hourly trend analysis."
+        tests:
+          - not_null
+
+      - name: crime_day
+        description: "The specific day of the month (1-31) when the incident occurred."
+        tests:
+          - not_null
+
+      - name: crime_month
+        description: "The month numerical index (1-12) used for analyzing seasonal crime patterns."
+        tests:
+          - not_null
+
+      - name: crime_year
+        description: "The calendar year of the crime incident execution."
+        tests:
+          - not_null
+
+      - name: crime_week_days
+        description: "The day of the week for weekly pattern tracking."
+        tests:
+          - not_null
+
+      - name: report_latancy_days
+        description: "The computational difference in days between the crime occurrence and the report update timestamp."
+        tests:
+          - not_null
+
+      - name: report_updated_on
+        description: "The exact date when the database record was last officially updated by the police department."
+
+      - name: block
+        description: "The standardized block address string serving as a foreign key link to dim_chicago_crime_location."
+        tests:
+          - not_null
+
+      - name: crime_beat
+        description: "The specific police beat sector code. Not-null test removed as raw data contains missing beat records."
+
+      - name: iucr_code
+        description: "Illinois Uniform Crime Reporting four-digit code mapping directly to the crime type dimension."
+        tests:
+          - not_null
+
+      - name: fbi_code
+        description: "FBI crime classification code used for high-level federal regulatory reporting."
+        tests:
+          - not_null
+
+      - name: is_arrest
+        description: "Binary indicator flag (1 or 0) showing whether an arrest was successfully executed."
+        tests:
+          - not_null
+
+      - name: is_domestic
+        description: "Binary indicator flag (1 or 0) showing whether the incident was legally classified as domestic violence."
+        tests:
+          - not_null
+
+      - name: x_coordinate
+        description: "The geographic X coordinate under the local state plane projection mapping system."
+
+      - name: y_coordinate
+        description: "The geographic Y coordinate under the local state plane projection mapping system."
+
+      - name: latitude
+        description: "Precise global latitude coordinate mapped for GIS and map visual processing."
+
+      - name: longitude
+        description: "Precise global longitude coordinate mapped for GIS and map visual processing."
+
+
+  - name: dim_chicago_crime_location
+    description: "Geographic dimension view grouping unique area locations down to specific street blocks."
+    columns:
+      - name: block
+        description: "The specific block identifier serving as the unique grain key for consolidated geographic records."
+        tests:
+          - unique
+          - not_null
+
+      - name: location_description
+        description: "The venue category or description where the crime occurred (e.g., STREET, RESIDENCE, GAS STATION)."
+
+      - name: crime_beat
+        description: "The operational police beat identifier assigned to the geographic jurisdiction."
+
+      - name: district
+        description: "The broader police district code tracking law enforcement zone responsibilities."
+
+      - name: ward
+        description: "The city council political boundary ward identifier mapping the location."
+
+      - name: community_area
+        description: "The official Chicago community area indexing code."
+
+      - name: crime_location
+        description: "A cleaned, concatenated spatial string representing descriptive geo metrics."
+
+
+  - name: dim_chicago_crime_type
+    description: "Law enforcement dimension view containing unique classification hierarchies via federal and state indices."
+    columns:
+      - name: iucr_code
+        description: "Primary key representing the Illinois Uniform Crime Reporting specific offense definition code."
+        tests:
+          - unique
+          - not_null
+
+      - name: fbi_code
+        description: "The high-level federal FBI index group classification categorization code."
+        tests:
+          - not_null
+
+      - name: crime_category
+        description: "The primary high-level index of the offense classification (e.g., THEFT, BATTERY, DECEPTIVE PRACTICE)."
+        tests:
+          - not_null
+
+      - name: crime_description
+        description: "Detailed granular description text defining the precise nature of the offense category."

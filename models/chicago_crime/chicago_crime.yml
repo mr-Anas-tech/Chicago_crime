@@ -4,7 +4,14 @@ sources:
   - name: chicago_crime
     database: bigquery-public-data
     schema: chicago_crime
-
     tables:
       - name: crime
-    
+        config:
+          loaded_at_field: updated_on
+          freshness:
+            warn_after:
+              count: 2
+              period: day
+            error_after:
+              count: 3
+              period: day
