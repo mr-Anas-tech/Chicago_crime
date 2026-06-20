@@ -96,5 +96,12 @@ To guarantee strict compliance with data quality SLAs, schema testing assertions
 
 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    Insights:
+####  Insights:
+### Key Analytical Insights for Model Documentation
+ * **Extreme Low Arrest Enforcement in High-Volume Offenses:** While **THEFT** represents the single largest strain on city resources and is the absolute highest volume driver, it suffers from a critical enforcement gap with a recorded **Arrest Rate of only ~8%**. This indicates a severe systematic challenge in closing property crime incidents compared to proactive offenses.
+ * **Proactive Enforcement Efficacy:** Proactive policing categories, specifically *Narcotics*, *Gambling*, and *Concealed Carry License Violations*, maintain highly successful arrest profiles exceeding **90%**. This is statistically driven by the nature of the offenses, which typically require on-the-scene enforcement and immediate logging upon discovery.
+ * **The Midnight Logging & High-Intensity Anomaly:** A massive, anomalous spike in recorded criminal activity occurs precisely at **00:00 (Midnight)**. This represents a dual-factor phenomenon: high-intensity late-night activity combined with administrative data logging behavior where incidents with unconfirmed times default to the start of the day.
+ * **Seasonal Environmental Corelation:** Criminal activity exhibits a clear, predictable seasonal wave. Volume climbs drastically through spring and peaks heavily during **May**, establishing a strong baseline correlation between rising summer temperatures, increased public mobility, and public safety incidents. Conversely, volume drops to its annual floor during the winter window (November to January).
+ * **Uniform Weekly Distribution:** On a micro-level, criminal activity does not show significant variance between weekdays and weekends. The volume remains almost completely uniform, holding a steady **~14% baseline distribution per day** across all seven days of the week.
+ * **Public Infrastructure Vulnerability:** Spatial metrics prove that public areas face the highest risk density. **STREETS** and **SIDEWALKS** serve as the primary hot spots for logged offenses, while **RESIDENCES** and **APARTMENTS** dictate the primary risk sectors within private boundaries.
 
