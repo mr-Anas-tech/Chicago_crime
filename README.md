@@ -7,12 +7,12 @@ This repository contains an enterprise-grade data transformation pipeline built 
 
 ## 1. Project Architecture Overview
 
-The data pipeline strictly adheres to the **Medallion Architecture (Bronze -> Silver -> Gold)** to separate data cleaning, business logic application, and dimensional modeling:
+The data pipeline strictly adheres to the **Medallion Architecture to separate data cleaning, business logic application, and dimensional modeling:
 
-1. **Source Layer (Bronze / Raw Ingestion):** Pulls the unrefined public crime dataset directly from Google BigQuery public data: `bigquery-public-data.chicago_crime.crime`.
-2. **Staging Layer (Silver / Data Cleansing):** Managed via `stg_crime.sql`. This layer handles explicit type casting, sanitizes structural records, and utilizes conditional `coalesce` mappings to replace null values with standard fallbacks.
-3. **Intermediate Layer (Silver / Transformation):** Managed via `int_chicago_crime.sql`. It centralizes complex calculations, extracts contextual date/time granular components, and translates text-based conditional flags into structured analytical metrics.
-4. **Marts Layer (Gold / Presentation Layer):** Consolidated analytical views and tables exposing star schema entities:
+1. **Source Layer (Raw Ingestion):** Pulls the unrefined public crime dataset directly from Google BigQuery public data: `bigquery-public-data.chicago_crime.crime`.
+2. **Staging Layer ( Data Cleansing):** Managed via `stg_crime.sql`. This layer handles explicit type casting, sanitizes structural records, and utilizes conditional `coalesce` mappings to replace null values with standard fallbacks.
+3. **Intermediate Layer (Transformation):** Managed via `int_chicago_crime.sql`. It centralizes complex calculations, extracts contextual date/time granular components, and translates text-based conditional flags into structured analytical metrics.
+4. **Marts Layer ( Presentation Layer):** Consolidated analytical views and tables exposing star schema entities:
    - `dim_chicago_crime_location`: A dimensional entity capturing distinct, unique block-level geographic details.
    - `dim_chicago_crime_type`: A classification entity containing deduplicated crime classification mappings (`iucr_code`).
    - `fct_chicago_crime`: The core transactional fact table capturing metric parameters, location pointers, and operational timestamps.
@@ -70,8 +70,7 @@ where rn = 1
 In the final presentation layer inside Google BigQuery, the final analytical dataset is successfully compiled by implementing structured **Left Joins**. The central transactional facts are joined with the location and crime type dimensions using specialized left join relations to preserve the integrity of every logged crime event entry.
 ## 3. Downstream Processing & Advanced Data Analytics
 Once the robust transformation workflow is completed inside Google BigQuery via dbt modeling layers, the curated data is dispatched for deep-dive analytics:
- 1. **Python Data Science Workflow:** The fully modeled, high-quality analytical datasets are exported and loaded into Python data ecosystems (Pandas, NumPy, and Plotly) for intensive programmatic exploratory data analysis (EDA), pattern discovery, and statistical analytics.
- 2. **Power BI Dashboards:** The curated star-schema models are seamlessly connected to Power BI to build highly dynamic, real-time, interactive security and executive operational dashboards to track crime spikes, report latency anomalies, and regional safety trends.
+ 1. **Python Data Analyst Workflow:** The fully modeled, high-quality analytical datasets are exported and loaded into Python data ecosystems (Pandas, NumPy, and Plotly, polar, os, bigquery,) for intensive programmatic exploratory data analysis (EDA), pattern discovery, and statistical analytics.
 ## 4. Execution & Testing Strategy
 To guarantee strict compliance with data quality SLAs, schema testing assertions are declared within marts.yml:
  1. **Primary Key Assertions:** crime_id is verified under unique and not_null assertions to confirm no double counting or orphan rows bypass the modeling layer.
